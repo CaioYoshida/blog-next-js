@@ -27,6 +27,9 @@ module.exports = {
       fontFamily: {
         body: ['Roboto']
       },
+      height: {
+        '80vh': '80vh',
+      },
       width: {
         '72': '20.0rem',
         '80': '24.0rem',
