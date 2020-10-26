@@ -1,22 +1,54 @@
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply text-lg leading-relaxed
 }
 
 .markdown h1 {
-  @apply text-4xl font-bold font-mono;
+  @apply text-3xl font-bold font-mono
 }
 
 .markdown p,
 .markdown ul,
 .markdown ol,
 .markdown blockquote {
-  @apply my-6 text-justify;
+  @apply my-6 text-justify
 }
 
 .markdown h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  @apply text-3xl font-bold mt-12 mb-4 leading-snug
 }
 
 .markdown h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+  @apply text-2xl mt-8 mb-4 leading-snug
 }
+
+.markdown figure {
+  @apply flex justify-center w-full
+}
+
+.markdown figure a {
+  @apply flex flex-row mt-8 mb-8
+}
+
+.markdown iframe {
+  flex-flow: 1;
+  width: 100%;
+  height: 30rem;
+}
+
+@media screen and (max-width: 600px) {
+  .markdown iframe {
+    flex-flow: 1;
+    width: 100%;
+    height: 20rem;
+  }
+}
+
+.markdown li {
+  list-style-type: disc;
+  margin-top: 0.4rem;
+}
+
+.markdown pre {
+  @apply p-4 bg-gray-100 overflow-x-scroll;
+}
+

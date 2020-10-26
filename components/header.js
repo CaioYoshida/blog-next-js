@@ -46,7 +46,7 @@ export default function Header() {
 
   return (
     <div className="fixed top-0 w-full z-20">
-      <nav className={`transition duration-500 ease-in-out flex items-center justify-between flex-wrap ${headerIsScrolled ? 'bg-white shadow' : 'bg-white bg-opacity-50'} px-4 py-2`}>
+      <nav className={`transition duration-500 ease-in-out flex items-center justify-between flex-wrap ${headerIsScrolled ? 'bg-white shadow' : 'bg-white bg-opacity-50'} px-4 py-4`}>
         <div className="flex items-center flex-shrink-0 text-white">
           <img src={htmlCoding} className="fill-black h-8 w-8 mr-2" />
           <Link href="/" >

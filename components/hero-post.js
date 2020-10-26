@@ -1,3 +1,4 @@
+import { useEffect } from 'react' 
 import Avatar from '../components/avatar'
 import DateFormater from '../components/date-formater'
 import CoverImage from '../components/cover-image'
@@ -29,7 +30,7 @@ export default function HeroPost({
         </div>
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-          <Avatar name={author.name} picture={author.picture} />
+          <Avatar name={author.name} picture={author.profile_image} />
         </div>
       </div>
     </section>

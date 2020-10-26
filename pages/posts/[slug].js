@@ -6,16 +6,16 @@ import Header from '../../components/header'
 import Newsletter from '../../components/newsletter'
 import PostHeader from '../../components/post-header'
 import Layout from '../../components/layout'
-import { getPostBySlug, getAllPosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
-import markdownToHtml from '../../lib/markdownToHtml'
+import { fetch } from 'cross-fetch'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
   if (!router.isFallback && !post.slug) {
     return <ErrorPage statusCode={404} />
   }
+  
   return (
     <>
       <Header />
@@ -30,15 +30,15 @@ export default function Post({ post, morePosts, preview }) {
                   <title>
                     {post.title}
                   </title>
-                  <meta property="og:image" content={post.ogImage.url} />
+                  <meta property="og:image" content={post.og_image} />
                 </Head>
                 <PostHeader
                   title={post.title}
-                  coverImage={post.coverImage}
-                  date={post.date}
-                  author={post.author}
+                  coverImage={post.feature_image}
+                  date={post.created_at}
+                  author={post.primary_author}
                 />
-                <PostBody content={post.content} />
+                <PostBody content={post.html} />
               </article>
             </>
           )}
@@ -49,31 +49,9 @@ export default function Post({ post, morePosts, preview }) {
   )
 }
 
-export async function getStaticProps({ params }) {
-  const post = getPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'author',
-    'content',
-    'ogImage',
-    'coverImage',
-  ])
-  
-  const content = await markdownToHtml(post.content || '')
-
-  return {
-    props: {
-      post: {
-        ...post,
-        content,
-      },
-    },
-  }
-}
-
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug'])
+  const response = await fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e`)
+  const { posts } = await response.json()
 
   return {
     paths: posts.map((post) => {
@@ -83,6 +61,20 @@ export async function getStaticPaths() {
         },
       }
     }),
-    fallback: false,
+    fallback: true,
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const { slug } = params
+
+  const response = await fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/slug/${slug}/?key=42d888d8957b19a33c4a613c3e&include=authors`)
+  const { posts } = await response.json()
+  
+  return {
+    props: {
+      post: posts[0],
+    },
+    unstable_revalidate: 60,
   }
 }

@@ -18,3 +18,39 @@
 html {
   scroll-behavior: smooth
 }
+
+.kg-image-card {
+  @apply flex flex-col;
+}
+
+.kg-image-card figcaption{
+  @apply text-center font-medium mt-2;
+}
+
+.kg-bookmark-container {
+  @apply bg-white border border-solid border-gray-200;
+}
+
+.kg-bookmark-content {
+  @apply p-4;
+}
+
+.kg-bookmark-title {
+  @apply font-bold;
+}
+
+.kg-bookmark-description {
+  @apply mt-2;
+}
+
+.kg-bookmark-metadata {
+  @apply flex flex-row items-center mt-4;
+}
+
+.kg-bookmark-icon {
+  @apply h-8;
+}
+
+.kg-bookmark-publisher {
+  @apply ml-2 text-blue-400;
+}
