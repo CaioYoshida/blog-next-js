@@ -25,7 +25,12 @@ module.exports = {
         '8xl': '6.25rem',
       },
       fontFamily: {
-        body: ['Roboto']
+        body: ['Roboto'],
+        vampiro: ['Vampiro One'],
+        lobster: ["Lobster"],
+        itim: ["Itim"],
+        pacifico: ["Pacifico"],
+        pro: ["Source Sans Pro"]
       },
       height: {
         '80vh': '80vh',
@@ -37,10 +42,15 @@ module.exports = {
       boxShadow: {
         small: '0 5px 10px rgba(0, 0, 0, 0.12)',
         medium: '0 8px 30px rgba(0, 0, 0, 0.12)',
-      },    
+      },
+      scale: {
+        200: '2'
+      }    
     },
   },
   variants: {
-    transitionProperty: ['responsive', 'motion-safe', 'motion-reduce']
+    transitionProperty: ['responsive', 'motion-safe', 'motion-reduce', 'group-hover'],
+    scale: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    backgroundColor: ['responsive', 'hover', 'focus', 'active', 'group-hover']
   }
 }

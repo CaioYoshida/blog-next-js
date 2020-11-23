@@ -54,3 +54,7 @@ html {
 .kg-bookmark-publisher {
   @apply ml-2 text-blue-400;
 }
+
+.kg-gallery-row {
+  @apply grid grid-cols-1 gap-4
+}

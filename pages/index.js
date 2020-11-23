@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
+import fetch from 'cross-fetch'
+import Head from 'next/head'
+import AdSense from 'react-adsense'
+
 import Container from '../components/container'
 import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
 import Layout from '../components/layout'
 import About from '../components/about'
-import Head from 'next/head'
-import { CMS_NAME } from '../lib/constants'
-import Header from '../components/header'
 import Newsletter from '../components/newsletter'
-import Button from '../components/button'
-import fetch from 'cross-fetch'
+import LoadMoreStoriesButton from '../components/loadMoreStoriesButton'
+import AdBanner from '../components/adBanner'
+import { CMS_NAME } from '../lib/constants'
 
 export default function Index({ lastsPosts }) {
   const heroPost = lastsPosts[0]
@@ -18,10 +20,9 @@ export default function Index({ lastsPosts }) {
   const [numberOfPages, setNumberOfPages] = useState(0)
 
   useEffect(() => {
-    fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e&limit=5&include=authors&page=${page}`).then(response => {
+    fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e&limit=5&include=authors,tags&page=${page}`).then(response => {
       response.json().then(data => {
-        setMorePosts(data.posts.slice(1))
-        setNumberOfPages(data.meta.pages)
+        setNumberOfPages(data.meta.pagination.pages)
       })
     })
   }, [])
@@ -30,7 +31,7 @@ export default function Index({ lastsPosts }) {
     if (page >= numberOfPages) {
       return
     } else {
-      fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e&limit=5&include=authors&page=${page + 1}`).then(response => {
+      fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e&limit=5&include=authors,tags&page=${page + 1}`).then(response => {
         response.json().then(data => {
           setMorePosts([...morePosts, ...data.posts])
         })
@@ -45,14 +46,6 @@ export default function Index({ lastsPosts }) {
         <Head>
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
-        <Header />
-        <div className="flex flex-col justify-center items-center">
-          <img className="w-screen h-80vh lg:h-screen object-cover z-0" src={'assets/landing.jpg'} alt="landing image"/>
-          <span className="text-6xl sm:text-8xl font-mono text-gray-900 absolute z-10">START:CODE</span>
-        </div>
-        <Container color="bg-gray-100" containerId="about">
-          <About />
-        </Container>
         <Container containerId="blog">
           {heroPost.primary_author && (
             <HeroPost
@@ -62,10 +55,20 @@ export default function Index({ lastsPosts }) {
               author={heroPost.primary_author}
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
+              tag={heroPost.primary_tag}
             />
           )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-          {heroPost.primary_author && <Button onClick={loadMorePosts}>Load more posts</Button>}
+        </Container>
+        <Container color="bg-red-100" containerId="more-stories">
+          {lastsPosts.length > 0 && <MoreStories posts={lastsPosts.slice(1)} />}
+          {morePosts.length > 0 && <MoreStories posts={morePosts} hasHeadlineTitle={false} />}
+          {page !== numberOfPages && 
+            <LoadMoreStoriesButton onClick={loadMorePosts}/>
+          }
+        </Container>
+        <Container containerId="about">
+          <About />
+          <AdBanner slotId='1061687698' width={728} height={90}/>
         </Container>
         <Newsletter />
       </Layout>
@@ -73,8 +76,8 @@ export default function Index({ lastsPosts }) {
   )
 }
 
-export const getStaticProps = async (context) => {
-  const response = await fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e&limit=5&include=authors&page=1`)
+export const getStaticProps = async () => {
+  const response = await fetch(`https://start-code-ghost.herokuapp.com/ghost/api/v3/content/posts/?key=42d888d8957b19a33c4a613c3e&limit=5&include=authors,tags&page=1`)
   const { posts } = await response.json()
 
   return {

@@ -8,14 +8,14 @@ export default function useVisibility({ children, tailwindCSS }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio === 1.0) {
+        if (entry.intersectionRatio >= 0.1) {
           setElementIsViewed(false)
         }
       },
       {
         root: null,
         rootMargin: '0px',
-        threshold: [0.5, 1.0]
+        threshold: [0.1, 0.5, 1.0]
       }
     )
 

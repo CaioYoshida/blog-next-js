@@ -9,7 +9,6 @@ import UseVisibility from '../components/useVisibility'
 import github from '../public/assets/svg/github.svg'
 import instagram from '../public/assets/svg/instagram.svg'
 import linkedin from '../public/assets/svg/linkedin.svg'
-import htmlCoding from '../public/assets/svg/html-coding.svg'
 
 export default function Footer() {
   const [name, setName] = useState('');
@@ -41,6 +40,7 @@ export default function Footer() {
                 <div className="sm:mb-0 mb-2">
                   <Input 
                     label="Name *"
+                    labelColor='text-red-600'
                     type="text"
                     value={name}
                     setValue={e => setName(e.target.value)}
@@ -49,6 +49,7 @@ export default function Footer() {
                 <div>
                   <Input 
                     label="E-mail *"
+                    labelColor='text-red-600'
                     type="e-mail"
                     value={email}
                     setValue={e => setEmail(e.target.value)}
@@ -58,13 +59,14 @@ export default function Footer() {
             <div className="mt-4">
               <Input 
                 label="Subject *"
+                labelColor='text-red-600'
                 type="text"
                 value={subject}
                 setValue={e => setSubject(e.target.value)}
               />
             </div>
             <div className="mt-4">
-              <label className="font-semibold" for="messageBox">Message *</label>
+              <label className="font-semibold text-red-600" for="messageBox">Message *</label>
               <textarea 
                 id="messageBox"
                 name="Message" 
@@ -76,15 +78,14 @@ export default function Footer() {
               />
             </div>
             <div className="mt-4 xl:w-64 hover:opacity-50">
-              <Button type="submit" onClick={handleSendEmail}>Enviar</Button>
+              <Button type="submit" backgroundColor='bg-red-600' onClick={handleSendEmail}>Enviar</Button>
             </div>
           </form>
           <div className="bg-transparent h-20 flex flex-row pt-6 md:flex-col md:h-auto md:w-1/3 md:pl-6">
             <UseVisibility>
-              <div className="flex flex-row">
-                <img src={htmlCoding} className="fill-black h-8 w-8 mr-2" />
+              <div className="flex flex-row items-center">
                 <Link href="/" >
-                  <a className="font-semibold text-black text-xl tracking-tight">START : CODE</a>
+                  <a className="font-semibold text-orange-500 text-3xl font-lobster tracking-tight">Você + Pet</a>
                 </Link>
               </div>
             </UseVisibility>

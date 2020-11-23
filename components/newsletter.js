@@ -4,7 +4,7 @@ import Button from '../components/button'
 import axios from 'axios'
 
 export default function Header({ actionPoint = 1000 }) {
-  const [headerIsScrolled, setHeaderIsScrolled] = useState(true)
+  const [showNewsletter, setShowNewsletter] = useState(true)
   const [emailAddress, setEmailAddress] = useState('')
 
   const handleSubscribeButton = async () => {
@@ -18,9 +18,9 @@ export default function Header({ actionPoint = 1000 }) {
 
   const handleScroll = () => {
     if(window.scrollY >= actionPoint) {
-      setHeaderIsScrolled(false)
+      setShowNewsletter(false)
     } else {
-      setHeaderIsScrolled(true);
+      setShowNewsletter(true);
     }
   }
 
@@ -30,10 +30,10 @@ export default function Header({ actionPoint = 1000 }) {
   });
 
   return (
-    <div className={`transition duration-500 ease-in-out fixed bottom-0 w-full z-30 ${headerIsScrolled ? 'transform translate-y-20' : 'transform -translate-y-0'}`}>
+    <div className={`transition duration-500 ease-in-out fixed bottom-0 w-full z-30 ${showNewsletter ? 'transform translate-y-20' : 'transform -translate-y-0'} font-lobster`}>
       <nav className={`transition duration-500 ease-in-out flex items-center justify-center bg-gray-300 shadow px-4 py-4`}>
         <div className="grid grid-flow-col gap-4">
-          <span className="self-center font-bold" >STAY UP TO DATE</span>
+          <span className="self-center font-bold text-red-600" >Stay Up To Date</span>
           <Input 
             marginTop={0} 
             placeholder="Enter with your e-mail" type="email"
@@ -41,7 +41,10 @@ export default function Header({ actionPoint = 1000 }) {
             value={emailAddress}
             setValue={event => setEmailAddress(event.target.value)}
           />
-          <Button onClick={handleSubscribeButton}>
+          <Button 
+            backgroundColor="bg-red-600"
+            onClick={handleSubscribeButton}
+          >
             Subscribe
           </Button>
         </div>
